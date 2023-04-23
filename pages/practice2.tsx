@@ -11,6 +11,8 @@ export default function FirstPost() {
       <h1>First Post</h1>
       <h2>
         <Link href="/">← Back to home</Link>
+        <p></p>
+        <Link href="/practice1">← Practice1</Link>
       </h2>
     </Layout>
   );
