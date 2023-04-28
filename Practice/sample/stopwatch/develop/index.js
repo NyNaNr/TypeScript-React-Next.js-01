@@ -2,59 +2,38 @@
 グローバル変数
 ================================*/
 //スタートからの経過時間
-let timeCount: number = 0;
+var timeCount = 0;
 //計測状態（計測中：true、停止中:false)
-let isRunning: boolean = false;
-
+var isRunning = false;
 //タイマーの識別ID
-let timerID: number = 0;
-
+var timerID = 0;
 // カウントダウン表示部
-const elmCount: HTMLElement = document.querySelector('#count')!;  //Nullではない」を表す[!]
-
+var elmCount = document.querySelector('#count'); //Nullではない」を表す[!]
 // スタートボタン
-const elmStart: HTMLElement = document.querySelector('#start')!;
-
+var elmStart = document.querySelector('#start');
 // リセットボタン
-const elmReset: HTMLElement = document.querySelector('#reset')!;
-
-
+var elmReset = document.querySelector('#reset');
 /*==============================
 イベントハンドラを定義する
 ================================*/
-
 // アプリケーション初期化
-const onPageLoad = () => {
-    
+var onPageLoad = function () {
 };
-
 // スタート処理
-const onStart = () => {
-    
+var onStart = function () {
 };
-
 // リセット処理
-const onReset = () => {
-
+var onReset = function () {
 };
-
 /*==============================
 /イベントリスナーを設定する
 ================================*/
-
 // ページの読み込み完了イベント
 window.addEventListener('load', onPageLoad);
-
 //スタートボタンのクリックイベント
 elmStart.addEventListener('click', onStart);
-
 //リセットボタンのクリックイベント
 elmReset.addEventListener('click', onReset);
-
-
-
 /*==============================
 //その他自作関数を定義する
 ================================*/
-
-
