@@ -57,4 +57,4 @@ elmReset.addEventListener('click', onReset);
 //その他自作関数を定義する
 ================================*/
 
-
+// timeCount の値を分：秒　ミリ秒
