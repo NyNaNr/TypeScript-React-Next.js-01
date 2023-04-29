@@ -62,7 +62,7 @@ const onStart = () => {
 
         }
         //計測中の場合
-        else {
+        else if(isRunning === true) {
             //タイマー停止
             stopTimer(timerID);
         }
@@ -211,7 +211,7 @@ function stopTimer(timerID: number ) {
         isRunning = false;
     }
     
-    if (appMode === MODE.Watch) {
+    else if (appMode === MODE.Watch) {
         //タイマーを停止
         clearInterval(timerID);
         //計測状態を「停止中」に変更
@@ -244,5 +244,8 @@ function changeMode(){
         appMode = MODE.Count;
         // 日付表示部非表示
         elmDate.style.visibility = 'hidden';
+        stopTimer(timerID2);
+        resetTimer();
+        updateView(timeCount);
     }
 }
