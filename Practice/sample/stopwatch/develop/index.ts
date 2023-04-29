@@ -244,6 +244,8 @@ function changeMode(){
         appMode = MODE.Count;
         // 日付表示部非表示
         elmDate.style.visibility = 'hidden';
+
+        //本では以下の部分がなかったため、バグが発生していた。この部分がないと、モード切り替え後、ストップウォッチモードの挙動がおかしくなる。
         stopTimer(timerID2);
         resetTimer();
         updateView(timeCount);
