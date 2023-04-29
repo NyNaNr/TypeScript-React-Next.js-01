@@ -22,7 +22,7 @@ let timeCount: number = 0;
 let isRunning: boolean = false;
 
 //タイマーの識別ID
-let timerID: number = 0;
+let timerID1: number = 0;
 
 // タイマーの識別ID（時計用）
 let timerID2: number = 0;
@@ -64,9 +64,10 @@ const onStart = () => {
         //計測中の場合
         else if(isRunning === true) {
             //タイマー停止
-            stopTimer(timerID);
+            stopTimer(timerID1);
         }
     }
+    //時計モードの場合何も起きない。
 };
 
 // リセット処理
@@ -74,7 +75,7 @@ const onReset = () => {
     if (appMode === MODE.Count) {
     //ストップウォッチモードの場合
     //タイマーの停止
-    stopTimer(timerID);
+    stopTimer(timerID1);
     //タイマーをリセット
     resetTimer();
     //描画の更新
@@ -97,7 +98,7 @@ const onChangeMode = () => {
     //時計モードの場合
     else if (appMode === MODE.Watch) {
         //すぐにタイマーを開始
-        startTimer(1000);
+        startTimer(1000); //実引数に1000をいれても入れなくてもOK　startTimerの仮引数のデフォルトが1000だから
         //描画を更新
         updateView();
 
@@ -131,32 +132,26 @@ elmReset.addEventListener('dblclick', onChangeMode);
 function updateView(timeCount: number = 0) {
     //ストップウォッチモードの場合
     if (appMode === MODE.Count){
-    // 最大表示時間を超えない制限
-    if (timeCount > 60 * 60 * 1000 - 1) {
-        timeCount = 60 * 60 * 1000 -1 //59:59 99
-    }
-
-    // 「ミリ秒」を求める
-    const ms: string = (timeCount % 1000).toString().padStart(3, '0').slice(0, 2);
-    
-    // 秒を求める
-    const ss: string = (Math.floor(timeCount / 1000) % 60).toString().padStart(2, '0');
-    
-    //分を求める
-    const mm: string = Math.floor(timeCount / 1000 / 60).toString().padStart(2, '0');
-
-    //表示する文字列を編集
-    const count: string = mm + ':' + ss + ' <small>' + ms + '</small>';
-    // カウントの更新
-    elmCount.innerHTML = count;
-    }
-    
+        // 最大表示時間を超えない制限
+        if (timeCount > 60 * 60 * 1000 - 1) {
+            timeCount = 60 * 60 * 1000 -1 //59:59 99
+        }
+        // 「ミリ秒」を求める
+        const ms: string = (timeCount % 1000).toString().padStart(3, '0').slice(0, 2);
+        // 秒を求める
+        const ss: string = (Math.floor(timeCount / 1000) % 60).toString().padStart(2, '0');
+        //分を求める
+        const mm: string = Math.floor(timeCount / 1000 / 60).toString().padStart(2, '0');
+        //表示する文字列を編集
+        const count: string = mm + ':' + ss + ' <small>' + ms + '</small>';
+        // カウントの更新
+        elmCount.innerHTML = count;
+        }
     //時計モードの場合
     else if (appMode === MODE.Watch) {
         const now:Date = new Date();
         //日付を取得2022/12/12の形式
         const date = now.toLocaleDateString(); 
-
         //曜日リストを作成
         const dayOfWeek: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
         //曜日を取得
@@ -183,7 +178,7 @@ function startTimer(interval: number = 1000) {
     //ストップウォッチモードの場合
     if (appMode === MODE.Count) {
         // 指定された時間ごとにカウントを更新
-        timerID = window.setInterval(() => {
+        timerID1 = window.setInterval(() => {
         //経過時間を加算
             timeCount += interval;
         //描画を更新
@@ -209,6 +204,7 @@ function stopTimer(timerID: number ) {
         clearInterval(timerID);
         //計測状態を「停止中」に変更
         isRunning = false;
+        
     }
     
     else if (appMode === MODE.Watch) {
@@ -231,6 +227,10 @@ function resetTimer() {
 function changeMode(){
     //ストップウォッチモードの場合
     if (appMode === MODE.Count) {
+        //以下３行のコードもバグにはならないが安全上追加
+        stopTimer(timerID1)
+        resetTimer();  
+        updateView(timeCount);
         //時計モードに変更  
         appMode = MODE.Watch;
         // 日付表示部分を表示
@@ -246,6 +246,10 @@ function changeMode(){
         elmDate.style.visibility = 'hidden';
 
         //本では以下の部分がなかったため、バグが発生していた。この部分がないと、モード切り替え後、ストップウォッチモードの挙動がおかしくなる。
+        /*stopTimer(timerID2) を実行しない場合、モードが切り替わったときに timerID2 の setInterval が停止されず、
+        時計モードで設定された updateView() が引き続き実行されてしまいます。
+        その結果、ストップウォッチモードに戻っても、時計モードの updateView() が同時に実行されるため、
+        表示が期待通りに更新されません。*/
         stopTimer(timerID2);
         resetTimer();
         updateView(timeCount);

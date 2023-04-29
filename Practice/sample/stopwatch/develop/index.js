@@ -17,7 +17,7 @@ var timeCount = 0;
 //計測状態（計測中：true、停止中:false)
 var isRunning = false;
 //タイマーの識別ID
-var timerID = 0;
+var timerID1 = 0;
 // タイマーの識別ID（時計用）
 var timerID2 = 0;
 // カウントダウン表示部
@@ -49,16 +49,17 @@ var onStart = function () {
         //計測中の場合
         else if (isRunning === true) {
             //タイマー停止
-            stopTimer(timerID);
+            stopTimer(timerID1);
         }
     }
+    //時計モードの場合何も起きない。
 };
 // リセット処理
 var onReset = function () {
     if (appMode === MODE.Count) {
         //ストップウォッチモードの場合
         //タイマーの停止
-        stopTimer(timerID);
+        stopTimer(timerID1);
         //タイマーをリセット
         resetTimer();
         //描画の更新
@@ -78,7 +79,7 @@ var onChangeMode = function () {
     //時計モードの場合
     else if (appMode === MODE.Watch) {
         //すぐにタイマーを開始
-        startTimer(1000);
+        startTimer(1000); //実引数に1000をいれても入れなくてもOK　startTimerの仮引数のデフォルトが1000だから
         //描画を更新
         updateView();
     }
@@ -146,7 +147,7 @@ function startTimer(interval) {
     //ストップウォッチモードの場合
     if (appMode === MODE.Count) {
         // 指定された時間ごとにカウントを更新
-        timerID = window.setInterval(function () {
+        timerID1 = window.setInterval(function () {
             //経過時間を加算
             timeCount += interval;
             //描画を更新
@@ -188,6 +189,10 @@ function resetTimer() {
 function changeMode() {
     //ストップウォッチモードの場合
     if (appMode === MODE.Count) {
+        //以下３行のコードもバグにはならないが安全上追加
+        stopTimer(timerID1);
+        resetTimer();
+        updateView(timeCount);
         //時計モードに変更  
         appMode = MODE.Watch;
         // 日付表示部分を表示
@@ -200,6 +205,10 @@ function changeMode() {
         // 日付表示部非表示
         elmDate.style.visibility = 'hidden';
         //本では以下の部分がなかったため、バグが発生していた。この部分がないと、モード切り替え後、ストップウォッチモードの挙動がおかしくなる。
+        /*stopTimer(timerID2) を実行しない場合、モードが切り替わったときに timerID2 の setInterval が停止されず、
+        時計モードで設定された updateView() が引き続き実行されてしまいます。
+        その結果、ストップウォッチモードに戻っても、時計モードの updateView() が同時に実行されるため、
+        表示が期待通りに更新されません。*/
         stopTimer(timerID2);
         resetTimer();
         updateView(timeCount);
