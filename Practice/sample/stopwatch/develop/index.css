@@ -28,6 +28,17 @@
   
 }
 
+/* 日付表示部 */
+#date {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  font-size: 25%;
+  width: 100%;
+  text-align: center;
+}
+
+
 /* スタートボタン */
 #start {
   width: 100px;
