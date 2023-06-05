@@ -1,10 +1,13 @@
 import React from "react";
 import List from "./date";
+
 import { ListContainer, ListItem } from "./styles";
 import DragHandle from "./partials/DragHandle";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+
 const App = () => {
+
   const list = List.getList();
   return (
     <div className="App">
@@ -41,7 +44,7 @@ const App = () => {
                         }}
                       >
                         <DragHandle {...provided.dragHandleProps} />
-                        <span>{item.title}</span>
+                        <span >{item.title}</span>
                       </ListItem>
                     )}
                   </Draggable>
