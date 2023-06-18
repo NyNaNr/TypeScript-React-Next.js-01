@@ -10,6 +10,9 @@
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
     "@svgr/webpack": "^8.0.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
