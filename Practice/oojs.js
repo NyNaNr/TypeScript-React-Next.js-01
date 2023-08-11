@@ -3,12 +3,13 @@ const cat = {
   breed : 'Cymric',
   color : 'white',
   greeting: function() {
-    console.log('Meow!');
+    console.log(`Hello, said ${cat.name} the ${cat.breed}` );
   }
 }
 
 // Put your code here
 const catName = cat['name'];
+console.log(catName)
 cat.greeting();
 cat.color = 'black';
 
