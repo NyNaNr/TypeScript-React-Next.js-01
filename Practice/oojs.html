@@ -32,6 +32,33 @@ const myDataValue = "1.75m";
 person[myDataName] = myDataValue;
 
 
+// コンストラクターの導入（複数のオブジェクトを作成する場合便利）
+
+// 1,これは関数であり、コンストラクターではない
+function createPerson(name) {
+  const obj = {};
+  obj.name = name;
+  obj.introduceSelf = function () {
+    console.log(`Hi! I'm ${this.name}.`);
+  };
+  return obj;
+}
+
+const salva = createPerson('Salva');
+console.log(salva.name);
+salva.introduceSelf();
+
+// 2　コンストラクター
+function Person(name) {
+  this.name = name;
+  this.introduceSelf = function () {
+    console.log(`Hi! I'm ${this.name}.`);
+  };
+}
+
+const lisa = new Person('Lisa');
+lisa.introduceSelf()
+
     </script>
   </body>
 
