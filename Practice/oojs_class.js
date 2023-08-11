@@ -67,7 +67,7 @@ console.log(ayumi.canStudentArchery())
 
 
 // https://developer.mozilla.org/ja/docs/Learn/JavaScript/Objects/Test_your_skills:_Object-oriented_JavaScript
-// OOJS テスト
+// OOJS 1　テスト
 
 
 class Shape {
@@ -94,3 +94,33 @@ square.calcPerimeter()
 
 const triangle = new Shape('triangle', 3, 3);
 triangle.calcPerimeter()
+
+// OOJS 2 テスト
+class Square extends Shape {
+  
+
+    constructor(sideLength) {
+        super('Square', 4, sideLength);
+        
+    }
+
+    calcArea() {
+        const result = this.sideLength ** 2;
+        console.log(`Area of ${this.name}: ${result}`)
+    }
+
+
+}
+
+const home = new Square(10);
+home.calcArea();
+home.calcPerimeter();
+
+/*
+
+間違ったこと
+class Square extends Shape() ←（）付けない
+super('Square', 4, sideLength);で固定の値を設定する。
+
+
+*/
