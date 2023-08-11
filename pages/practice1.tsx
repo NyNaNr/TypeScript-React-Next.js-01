@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Script from 'next/script';
 import styles from '@/styles/layout.module.css'
+import NavbarForMobile from './NavbarForMobile';
 
 function Layout({ children }) {
     return <div className={styles.container}>{children}</div>;
@@ -10,6 +11,7 @@ function Layout({ children }) {
 export default function FirstPost() {
   return (
     <Layout>
+      <NavbarForMobile/>
       <Head>
         <title>First Post</title>
       </Head>
