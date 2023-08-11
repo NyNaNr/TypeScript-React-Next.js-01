@@ -64,3 +64,33 @@ class Student extends Person{
 const ayumi = new Student('Ayumi',2);
 ayumi.introduceSelf()
 console.log(ayumi.canStudentArchery())
+
+
+// https://developer.mozilla.org/ja/docs/Learn/JavaScript/Objects/Test_your_skills:_Object-oriented_JavaScript
+// OOJS テスト
+
+
+class Shape {
+
+  name;
+  sides;
+    sideLength;
+    
+    constructor(name, sides, sideLength) {
+        this.name = name;
+        this.sides = sides;
+        this.sideLength = sideLength;
+    }
+
+    calcPerimeter() {
+        const result = this.sides * this.sideLength
+        console.log(`${this.name} of Perimeter: ${result}`)
+    }
+
+}
+    
+const square = new Shape('square', 4, 5);
+square.calcPerimeter()
+
+const triangle = new Shape('triangle', 3, 3);
+triangle.calcPerimeter()
